@@ -29,6 +29,6 @@ module Groceries
   end
 
   def self.item(name, &block)
-    Docile.dsl_eval(ItemBuilder.new, &block).build(name).tap { |item| @price_list[name] = item }
+    Docile.dsl_eval(ItemBuilder.new(name), &block).build.tap { |item| @price_list[name] = item }
   end
 end
