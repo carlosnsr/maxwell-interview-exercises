@@ -25,3 +25,22 @@ RSpec.describe Groceries, "#parse" do
     end
   end
 end
+
+RSpec.describe Groceries, "#output" do
+  subject { Groceries.output(groceries) }
+
+  context 'given a list of groceries and their quantities' do
+    let(:groceries) { { milk: 2, butter: 1 } }
+
+    it 'returns a list of purchased items' do
+      expect { subject }.to output(
+        <<~OUTPUT
+          Item       Quantity  
+          ---------------------
+          Milk       2         
+          Butter     1         
+        OUTPUT
+      ).to_stdout
+    end
+  end
+end
