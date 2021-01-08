@@ -44,3 +44,32 @@ RSpec.describe Groceries, "#output" do
     end
   end
 end
+
+RSpec.describe Groceries, "#price_list" do
+  subject { Groceries.price_list }
+
+  it 'starts with an empty price_list' do
+    expect(subject).to be_empty
+  end
+end
+
+RSpec.describe Groceries, "#item" do
+  before(:each) { Groceries.reset_price_list }
+
+  context 'when creating an item' do
+    subject { Groceries.item :milk do price 4.00 end }
+
+    it 'returns a Grocery Item with the name and price' do
+      item = subject
+      expect(item).to be_a(Groceries::Item)
+      expect(item.name).to eql('Milk')
+      expect(item.price).to eql(4.00)
+    end
+
+    it 'adds a milk grocery item to the price_list' do
+      expect { subject }.to change { Groceries.price_list.size }.by(1)
+      expect(Groceries.price_list[:milk]).not_to be_nil
+      expect(Groceries.price_list[:milk]).to be_a(Groceries::Item)
+    end
+  end
+end
