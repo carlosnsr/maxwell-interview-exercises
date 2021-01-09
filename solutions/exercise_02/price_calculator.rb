@@ -11,13 +11,17 @@ module Groceries
   end
   item :banana do price 0.99 end
   item :apple do price 0.89 end
+
+  def main
+    puts 'Please enter all the items purchased separated by a comma'
+    input = gets
+    groceries = Groceries.parse(input)
+    if groceries.size == 0
+      puts 'No items entered'
+      return
+    end
+    Groceries.checkout(groceries)
+  end
 end
 
-def main
-  puts "Please enter all the items purchased separated by a comma"
-  input = gets
-  groceries = Groceries.parse(input)
-  Groceries.checkout(groceries)
-end
-
-main
+Groceries::main

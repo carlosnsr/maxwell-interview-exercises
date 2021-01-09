@@ -19,12 +19,12 @@ module Groceries
     end
   end
 
-  FORMAT_STRING = "%-10s %-10s %-10s"
+  FORMAT_STRING = '%-10s %-10s %-10s'
   FORMAT_STRING_LENGTH = 32
 
   def self.checkout(groceries)
     puts
-    puts FORMAT_STRING % %w[Item Quantity Price]
+    puts (FORMAT_STRING % %w[Item Quantity Price]).strip
     puts '-' * FORMAT_STRING_LENGTH
 
     savings = 0
@@ -32,8 +32,9 @@ module Groceries
     groceries.each do |name, quantity|
       item = @price_list[name]
       raise "Item #{name} is not in the price list" if item.nil?
+
       cost = item.cost(quantity)
-      puts FORMAT_STRING % [item.name, quantity, "$#{cost}"]
+      puts (FORMAT_STRING % [item.name, quantity, "$#{cost}"]).strip
       total_price += cost
       savings += item.savings(quantity)
     end

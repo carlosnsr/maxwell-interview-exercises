@@ -1,6 +1,6 @@
 require './src/groceries'
 
-RSpec.describe Groceries, "#parse" do
+RSpec.describe Groceries, '#parse' do
   subject { Groceries.parse(input) }
 
   context 'given a comma separated list' do
@@ -26,11 +26,10 @@ RSpec.describe Groceries, "#parse" do
   end
 end
 
-RSpec.describe Groceries, "#checkout" do
+RSpec.describe Groceries, '#checkout' do
   subject { Groceries.checkout(groceries) }
 
   context 'given a list of groceries and their quantities' do
-
     before(:all) do
       module Groceries
         item :milk do
@@ -48,10 +47,10 @@ RSpec.describe Groceries, "#checkout" do
       expect { subject }.to output(
         <<~OUTPUT
 
-          Item       Quantity   Price     
+          Item       Quantity   Price
           --------------------------------
-          Milk       2          $3.00     
-          Butter     1          $0.99     
+          Milk       2          $3.00
+          Butter     1          $0.99
 
           Total price: $3.99
           You saved $1.02 today!
@@ -61,7 +60,7 @@ RSpec.describe Groceries, "#checkout" do
   end
 end
 
-RSpec.describe Groceries, "#price_list" do
+RSpec.describe Groceries, '#price_list' do
   subject { Groceries.price_list }
 
   it 'starts with an empty price_list' do
@@ -69,7 +68,7 @@ RSpec.describe Groceries, "#price_list" do
   end
 end
 
-RSpec.describe Groceries, "#item" do
+RSpec.describe Groceries, '#item' do
   before(:each) { Groceries.reset_price_list }
 
   context 'when creating an item' do
