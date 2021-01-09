@@ -19,16 +19,33 @@ module Groceries
     end
   end
 
-  FORMAT_STRING = "%-10s %-10s"
-  FORMAT_STRING_LENGTH = 21
+  FORMAT_STRING = "%-10s %-10s %-10s"
+  FORMAT_STRING_LENGTH = 32
 
-  def self.output(groceries)
-    puts FORMAT_STRING % ['Item', 'Quantity']
+  def self.checkout(groceries)
+    puts
+    puts FORMAT_STRING % %w[Item Quantity Price]
     puts '-' * FORMAT_STRING_LENGTH
-    groceries.each { |item, quantity| puts FORMAT_STRING % [item.capitalize, quantity] }
+
+    savings = 0
+    total_price = 0
+    groceries.each do |name, quantity|
+      item = @price_list[name]
+      raise "Item #{name} is not in the price list" if item.nil?
+      cost = item.cost(quantity)
+      puts FORMAT_STRING % [item.name, quantity, "$#{cost}"]
+      total_price += cost
+      savings += item.savings(quantity)
+    end
+
+    puts
+    puts "Total price: $#{total_price}"
+    puts "You saved $#{savings} today!" if savings > 0
   end
 
   def self.item(name, &block)
-    Docile.dsl_eval(ItemBuilder.new(name), &block).build.tap { |item| @price_list[name] = item }
+    Docile.dsl_eval(ItemBuilder.new(name), &block)
+      .build
+      .tap { |item| @price_list[name] = item }
   end
 end

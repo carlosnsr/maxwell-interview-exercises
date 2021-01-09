@@ -10,7 +10,7 @@ module Groceries
     end
 
     def sale(quantity, options)
-      @sale = { quantity: quantity, for: options[:for] }
+      @sale = { quantity: quantity, price: options[:for] }
     end
 
     def build
